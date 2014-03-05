@@ -1,1 +1,1 @@
-recursive-include ninfopluginthreatexpert *.mako
+recursive-include ninfo_plugin_threatexpert *.mako
