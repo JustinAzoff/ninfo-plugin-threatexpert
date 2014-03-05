@@ -6,14 +6,21 @@ class threatexpert_plug(PluginBase):
     title         = 'Threatexpert'
     description   = 'ThreatExpert hash lookup'
     cache_timeout = 60*60
-    types         = ['ip','ip6','cidr', 'cidr6', 'hostname','username']
-    #local        = False
-    #remove       = False
+    types         = ['hash']
 
     def setup(self):
-        pass
+        import requests
+        self.get = requests.get
 
     def get_info(self, arg):
-        return {}
+        url = "http://www.threatexpert.com/report.aspx?md5=%s" % arg
+        r = self.get(url, allow_redirects=False)
+
+        hit = r.status_code == 200
+
+        return {
+            "hit": hit,
+            "url": url
+        }
 
 plugin_class = threatexpert_plug
